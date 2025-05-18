@@ -6,15 +6,21 @@ public class RspChallengeMode{
         boolean play = true;
         Scanner s = new Scanner(System.in);
         Random random = new Random();
-        int user_Pt = 300;
-        int com_Pt = 300;
+        int user_Pt = 200;
+        int com_Pt = 200;
         System.out.println("가위바위보 포인트 배팅 게임");
         System.out.println("[User]:" + user_Pt + "pt");
         System.out.println("[Com]:" + com_Pt + "pt");
         while (play) {
             int com_bet;
             if (com_Pt > 0) {
-                com_bet = random.nextInt(com_Pt) + 1;
+                int max_com_bet;
+                if (com_Pt <= 10) {
+                    max_com_bet = com_Pt;
+                } else {
+                    max_com_bet = Math.min (20,com_Pt/10);
+                }
+                com_bet = random.nextInt(max_com_bet) + 1;
             } else {
                 System.out.println("[Com]의 포인트가 모두 소진되었습니다.");
                 play = false;
@@ -60,7 +66,7 @@ public class RspChallengeMode{
                 case 2: user_choice = "바위"; break;
                 default : user_choice = "보"; break;
             }
-            System.out.println("User가 입력한 값 :"+user_num + "->" + user_choice);
+            System.out.println("[User] 고른 숫자 :"+user_num + "->" + user_choice);
             int com_num = random.nextInt(1,4);
             String com_choice;
             switch (com_num) {
@@ -68,11 +74,11 @@ public class RspChallengeMode{
                 case 2: com_choice = "바위"; break;
                 default: com_choice = "보"; break;
             }
-            System.out.println("CPU가 고른 숫자: " + com_num + "->" + com_choice);
+            System.out.println("[Com] 고른 숫자: " + com_num + "->" + com_choice);
             if ((user_num == 1 && com_num == 3) || 
                 (user_num == 2 && com_num == 1) || 
                 (user_num == 3 && com_num == 2)) {
-                System.out.println("User 승리!");
+                System.out.println("[User] 승리!");
                 System.out.println("[User]는" + pot_bet + "pt 획득 하셨습니다.");
                 user_Pt = user_Pt + pot_bet;
             } else if (user_num == com_num){
@@ -80,7 +86,7 @@ public class RspChallengeMode{
                 user_Pt = user_Pt + user_bet;
                 com_Pt = com_Pt + com_bet;
             } else {
-                System.out.println("COM 승리!");
+                System.out.println("[Com] 승리!");
                 System.out.println("[User]는" + user_bet + "pt를 잃었습니다.");
                 com_Pt = com_Pt + pot_bet;
             }
